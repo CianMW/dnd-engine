@@ -1,0 +1,27 @@
+.container{
+width:100%;
+height:100%;
+}
+.message{
+padding:0 1rem;
+}
+
+.bottomScrollButton{
+position:absolute; 
+top: 0px;
+right:0px;
+}
+
+.bgDark{
+background-color:black;
+color:white;
+}
+
+.bgLight{
+background-color:#fefefe;
+}
+
+.arrayElementContainer{
+    display:flex;
+    flex-direction:column;
+}
