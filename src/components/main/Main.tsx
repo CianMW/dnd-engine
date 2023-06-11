@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import styles from "./Main.module.css"; // Import styles
 import { getWeather } from "@/lib/weather";
@@ -11,21 +11,31 @@ import getKeyword from "@/lib/keyword";
 import getVerb from "@/lib/verbList";
 import { getRandomUrbanEncounter } from "@/lib/urban";
 import getRandomClue from "@/lib/clue";
+import MainStore, { storageContext } from "@/context";
+import Settings from "../settings/Settings";
 
-export interface Chat {
-  time: string; message: string|string[]
-}
 export default function MainView() {
-  const [chat, setChat] = useState<Chat[]>([]);
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  // const [chat, setChat] = useState<Chat[]>([]);
+  const {
+    //@ts-ignore
+    chat: [chat, setChat],
+    //@ts-ignore
+    addChatMessage,
+    //@ts-ignore
+    story:[story,setStory],
+    //@ts-ignore
+    addStoryMessage,
+    //@ts-ignore
+    adventureLocation:[adventureLocation,setAdventureLocation],
+    //@ts-ignore
+    season:[season,setSeason],
+    //@ts-ignore
+    wordCount:[wordCount,setWordCount],
+    //@ts-ignore
+  } = useContext(storageContext);
 
-  function addChatMessage(message: string|string[]) {
-    const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    setChat((oldChat) => [...oldChat, { time, message }]);
-  }
-
-  function getSomeWeather(prop: "summer") {
-    let weather = getWeather(prop);
+  function getSomeWeather() {
+    let weather = getWeather(season);
     addChatMessage(weather);
   }
 
@@ -39,43 +49,43 @@ export default function MainView() {
     addChatMessage(wildEnc);
   }
   function adventureElements() {
-    let element = getRandomAdventureElements('standard room');
+    let element = getRandomAdventureElements(adventureLocation);
     addChatMessage(element);
   }
-  function getKeywords(amount:number) {
-    let element = getKeyword(amount);
+  function getKeywords() {
+    let element = getKeyword(wordCount);
     addChatMessage(element);
   }
-  function getrandomVerbs(amount:number) {
-    let element = getVerb(amount);
+  function getrandomVerbs() {
+    let element = getVerb(wordCount);
     addChatMessage(element);
   }
-
-  
-
-  
 
 
   return (
     <>
-                <PopOutSideNav/>
-    <div className={styles.grid}>
-      <div className={styles.buttonContainer}>
-        <button onClick={adventureElements}>6D12</button>
-        <button onClick={() => getSomeWeather("summer")}>Weather</button>
-        <button onClick={getSomeLocation}>Rumour Location</button>
-        <button onClick={getWildernessEnc}>Wilderness Encounter</button>
-        <button onClick={() => addChatMessage(getRandomUrbanEncounter())}>Urban Encounter</button>
-        <button onClick={() => getKeywords(3)}>Keyword</button>
-        <button onClick={() => getrandomVerbs(3)}>Verb</button>
-        <button onClick={() => getSomeWeather('summer')}>Weather</button>
-        <button onClick={() => addChatMessage(getRandomClue())}>Clue</button>
-        <button onClick={() => addChatMessage(getRandomClue())}>Wilderness Clue</button>
+      <PopOutSideNav type={'left'}><></></PopOutSideNav>
+      <PopOutSideNav type={'right'}><Settings/></PopOutSideNav>
+      <div className={styles.grid}>
+        <div className={styles.buttonContainer}>
+          <button onClick={adventureElements}>6D12</button>
+          <button onClick={() => getSomeWeather()}>Weather</button>
+          <button onClick={getSomeLocation}>Rumour Location</button>
+          <button onClick={getWildernessEnc}>Wilderness Encounter</button>
+          <button onClick={() => addChatMessage(getRandomUrbanEncounter())}>
+            Urban Encounter
+          </button>
+          <button onClick={() => getKeywords()}>Keyword</button>
+          <button onClick={() => getrandomVerbs()}>Verb</button>
+          <button onClick={() => addChatMessage(getRandomClue())}>Clue</button>
+          <button onClick={() => addChatMessage(getRandomClue())}>
+            Wilderness Clue
+          </button>
+        </div>
+        <div className={styles.chatContainer}>
+          <ChatContainer chat={chat} story={story} addStoryMessage={addStoryMessage} />
+        </div>
       </div>
-      <div className={styles.chatContainer}>
-        <ChatContainer chat={chat}/>
-      </div>
-    </div>
     </>
   );
 }

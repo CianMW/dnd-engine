@@ -25,3 +25,20 @@ background-color:#fefefe;
     display:flex;
     flex-direction:column;
 }
+
+.storyMessage{
+    background-color: #D4AF37;
+    color:black;
+}
+
+.textInput{
+    width:100%;
+    background-color: #1b1b1b;
+    border: 2px solid white;
+    color: white;
+}
+.textInputButton{
+    font-weight:bold;
+    border-radius: 1rem;
+    background-color: gray;
+}

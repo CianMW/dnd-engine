@@ -1,0 +1,15 @@
+.setting{
+display:flex;
+justify-content:start;
+flex-direction:column;
+color:black;
+}
+
+.label{
+    font-weight:bold;
+}
+
+.settingsContainer{
+    display:flex;
+    flex-direction:column;
+}
