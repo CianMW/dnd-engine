@@ -16,7 +16,7 @@ const ORACLE_DATA=[
 
 
   
-export function askOracle(modifier:number=0): string {
+export function askOracle(modifier:number=0): string|undefined {
     let diceRoll = (Math.floor(Math.random() * 20) + 1) + modifier;
       if(diceRoll > 20) {diceRoll = 20}
       if(diceRoll < 1){ diceRoll = 1}
