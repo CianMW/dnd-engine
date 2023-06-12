@@ -9,7 +9,7 @@ padding:0 1rem;
 .bottomScrollButton{
 position:absolute; 
 top: 0px;
-right:0px;
+/* right:0px; */
 }
 
 .bgDark{

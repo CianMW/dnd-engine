@@ -13,6 +13,7 @@ import { getRandomUrbanEncounter } from "@/lib/urban";
 import getRandomClue from "@/lib/clue";
 import MainStore, { storageContext } from "@/context";
 import Settings from "../settings/Settings";
+import { askOracle } from "@/lib/oracle";
 
 export default function MainView() {
   // const [chat, setChat] = useState<Chat[]>([]);
@@ -32,6 +33,7 @@ export default function MainView() {
     //@ts-ignore
     wordCount:[wordCount,setWordCount],
     //@ts-ignore
+    oracleMod:[oracleMod,setOracleMod]
   } = useContext(storageContext);
 
   function getSomeWeather() {
@@ -61,6 +63,11 @@ export default function MainView() {
     addChatMessage(element);
   }
 
+  function askOracleQuestion(){
+    let answer = askOracle(parseInt(oracleMod))
+    addChatMessage(answer)
+  }
+
 
   return (
     <>
@@ -69,6 +76,7 @@ export default function MainView() {
       <div className={styles.grid}>
         <div className={styles.buttonContainer}>
           <button onClick={adventureElements}>6D12</button>
+          <button onClick={askOracleQuestion}>Oracle</button>
           <button onClick={() => getSomeWeather()}>Weather</button>
           <button onClick={getSomeLocation}>Rumour Location</button>
           <button onClick={getWildernessEnc}>Wilderness Encounter</button>

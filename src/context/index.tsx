@@ -37,6 +37,7 @@ const MainStore = ({ children }: any) => {
     const [season, setSeason] = useStateWithLocalStorage<string>("season", 'spring');
     const [wordCount, setWordCount] = useStateWithLocalStorage<number>("wordCount", 1);
     const [adventureLocation, setAdventureLocation] = useStateWithLocalStorage<string>("adventureLocation", 'standard wilderness');
+    const [oracleMod, setOracleMod] = useStateWithLocalStorage<number>("oracleMod", 0);
 
 
   // CHAT START
@@ -60,6 +61,7 @@ const MainStore = ({ children }: any) => {
         adventureLocation:[adventureLocation,setAdventureLocation],
         season:[season,setSeason],
         wordCount:[wordCount,setWordCount],
+        oracleMod:[oracleMod, setOracleMod],
         addChatMessage:addChatMessage,
         addStoryMessage:addStoryMessage,
       }}

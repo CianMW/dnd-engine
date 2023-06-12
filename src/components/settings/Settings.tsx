@@ -10,6 +10,7 @@ export default function Settings() {
       //@ts-ignore
       wordCount:[wordCount,setWordCount],
       //@ts-ignore
+    oracleMod:[oracleMod,setOracleMod]
     } = useContext(storageContext);
 
     return(<div className={styles.settingContainer}>
@@ -21,6 +22,18 @@ export default function Settings() {
             <option value={'standard room'}>Standard Room</option>
             <option value={'special room'}>Special Room</option>
             <option value={'passage'}>Passage</option>
+        </select>
+        </div>
+        <div className={styles.setting}>
+        <label className={styles.label}>Oracle Modifier: </label>
+        <select value={oracleMod} onChange={(e) => setOracleMod(e.currentTarget.value)}>
+            <option value={8}>A Certainty</option>
+            <option value={5}>Highly Likely</option>
+            <option value={3}>Likely</option>
+            <option value={0}>Possible</option>
+            <option value={-3}>Unlikely</option>
+            <option value={-5}>Highly Unlikely</option>
+            <option value={-8}>Impossible</option>
         </select>
         </div>
         <div className={styles.setting}>
